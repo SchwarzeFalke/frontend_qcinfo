@@ -1,2 +1,3 @@
-# frontend_qcinfo
+# QCInfo
+
 Frontend para QCInfo

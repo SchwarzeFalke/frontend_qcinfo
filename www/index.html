@@ -2,45 +2,53 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>QCInfo</title>
-    <link rel="stylesheet" href="css/onsen-css-components.css">
-    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="js/home.js"></script>
+  <link rel="stylesheet" href="css/onsen-css-components.css" />
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <script src="js/index.js"></script>
 </head>
 
 <body>
-    <ons-page>
-        <ons-toolbar>
-            <div class="center">Inicio</div>
-        </ons-toolbar>
+  <ons-page>
+    <center>
+      <img src="img/logo.png" alt="QCInfo" style="width: 70%" />
+    </center>
 
-        <ons-tabbar swipeable position="auto">
-            <ons-tab page="tab1.html" label="Inicio" icon="ion-home, material:md-home" badge="7" active>
-            </ons-tab>
-            <ons-tab page="tab2.html" label="Perfil" icon="md-settings" active-icon="md-face">
-            </ons-tab>
-        </ons-tabbar>
-    </ons-page>
+    <ons-dialog id="my-dialog">
+      <div style="text-align: center;">
+        <div style="text-align: center; margin-top: 30px;">
+          <p>
+            Datos incorrectos! Intente otra vez...
+          </p>
+          <p style="margin-top: 30px;">
+            <button class="button--cta" onclick="fn.hideDialog('my-dialog')">OK</button>
+          </p>
+        </div>
+      </div>
+    </ons-dialog>
 
-    <template id="tab1.html">
-        <ons-page id="Tab1">
-            <p style="text-align: center;">
-                Inicio
-            </p>
-        </ons-page>
-    </template>
+    <div class="login-form">
+      <center>
+        <i class="fas fa-user fa-2x"></i>
+        <input type="text" id="codigo" class="text-input--underbar" placeholder="Codigo" value="" /><br /><br />
+        <i class="fas fa-unlock fa-2x"></i>
+        <input type="password" id="nip" class="text-input--underbar" placeholder="NIP" value="" />
+        <br /><br />
+        <button onclick="send()" style="width: 180px;
+                        padding: 8px;
+                        color: #ff8200;
+                        font-size: 18px;
+                        border: none;
+                        background-color: transparent">
+          E N T R A R
+        </button>
+        <br /><br />
+      </center>
+    </div>
 
-    <template id="tab2.html">
-        <ons-page id="Tab2">
-            <p style="text-align: center;">
-                This is the second page.
-            </p>
-        </ons-page>
-    </template>
+    <h2 id="error" style="margin-top: 20px"></h2>
+  </ons-page>
 </body>
 
 </html>

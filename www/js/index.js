@@ -1,3 +1,9 @@
+window.fn = {};
+window.fn.hideDialog = function (id) {
+    document
+        .getElementById(id)
+        .hide();
+};
 var send = function () {
     var params = {
         "codigo": document.getElementById('codigo').value,
@@ -9,10 +15,25 @@ var send = function () {
 
     request.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            if (this.responseText == '0')
-                document.getElementById('error').innerHTML = "¡Código o NIP incorrecto!";
-            else
-                window.location.href = "index.html"
+            if (this.responseText == '0') {
+                var dialog = document.getElementById('my-dialog');
+
+                if (dialog) {
+                    dialog.show();
+                } else {
+                    ons.createElement('dialog.html', {
+                            append: true
+                        })
+                        .then(function (dialog) {
+                            dialog.show();
+                        });
+                }
+            } else {
+                console.log(this.responseText);
+                //A, 216787671, CARLOS % 20 ADONIS % 20 VARA % 20 PEREZ, CUCEI, COM
+                window.location.href = "home.html?somval=" + this.responseText;
+            }
+
         }
     }
 

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'" />
+    <script src="components/loader.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/onsenui/js/onsenui.min.js"></script>
+    <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+    <script src="lib/onsenui/js/home.js"></script>
+
+    <link rel="stylesheet" href="components/loader.css" />
+    <link rel="stylesheet" href="lib/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <<ons-splitter>
+        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+            <ons-page>
+                <ons-list>
+                    <ons-list-item onclick="fn.load('home.html')" tappable>
+                        NewsFeed
+                    </ons-list-item>
+                    <ons-list-item onclick="fn.load('profile.html')" tappable>
+                        Perfil
+                    </ons-list-item>
+                    <ons-list-item onclick="fn.load('report.html')" tappable>
+                        Reporte
+                    </ons-list-item>
+                </ons-list>
+            </ons-page>
+        </ons-splitter-side>
+        <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+        </ons-splitter>
+
+        <template id="home.html">
+            <ons-page>
+                <ons-toolbar modifier="material">
+                    <div class="left">
+                        <ons-toolbar-button onclick="fn.open()">
+                            <ons-icon icon="md-menu"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        Inicio
+                    </div>
+                </ons-toolbar>
+                <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+                    Bienvenido a QCInfo
+                </p>
+            </ons-page>
+        </template>
+
+        <template id="profile.html">
+            <ons-page>
+                <ons-toolbar modifier="material">
+                    <div class="left">
+                        <ons-toolbar-button onclick="fn.open()">
+                            <ons-icon icon="md-menu"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        Perfil
+                    </div>
+                </ons-toolbar>
+                <ons-card modifier="material">
+                    <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                        style="width: 100%">
+                    <div class="title">
+                        <p id="userName">{{name}}</p>
+                    </div>
+                    <div class="content">
+                        <br><br>
+                        <ons-list>
+                            <ons-list-header>Información Personal</ons-list-header><br>
+                            <ons-list-item id="userCenter">{{center}}</ons-list-item>
+                            <ons-list-item id="userCareer">{{career}}</ons-list-item>
+                        </ons-list>
+                    </div>
+                    <br><br>
+                    <ons-button>Subir foto</ons-button>
+                </ons-card>
+            </ons-page>
+        </template>
+
+        <template id="report.html">
+            <ons-page>
+                <ons-toolbar modifier="material">
+                    <div class=" left">
+                        <ons-toolbar-button onclick="fn.open()">
+                            <ons-icon icon="md-menu"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        Reporte
+                    </div>
+                </ons-toolbar>
+                <form id="form1" name="form1" style="text-align:left;margin-top:20px; padding: 8px">
+                    <p>
+                        <ons-input id="reportSubject" modifier="underbar" placeholder="Asunto" float>
+                        </ons-input>
+                    </p>
+                    <p>
+                        <ons-input id="reportDate">
+                            <input type="date">
+                        </ons-input>
+                    </p>
+                    <p>
+                        <textarea id="reportDescription" class="textarea" rows="5" placeholder="Descripción"></textarea>
+                    </p>
+                    <p>
+                        <ons-select id="reportType" name="select1">
+                            <option value="">- Elegir urgencia del asunto -</option>
+                            <option value="low">Baja</option>
+                            <option value="normal">Moderada</option>
+                            <option value="urgent">Urgente</option>
+                        </ons-select>
+                    </p>
+                    <p>
+                        <input onclick="sendReport()" class="login-button button--large button" value="Enviar">
+                    </p>
+                </form>
+            </ons-page>
+        </template>
+</body>
+
+</html>

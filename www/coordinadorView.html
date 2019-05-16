@@ -11,40 +11,17 @@
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/onsenui/js/onsenui.min.js"></script>
     <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
-    <script src="lib/onsenui/js/home.js"></script>
+    <script src="lib/onsenui/js/coordinadorView.js"></script>
 
     <link rel="stylesheet" href="components/loader.css" />
     <link rel="stylesheet" href="lib/onsenui/css/onsenui.css" />
     <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <script>
-    function enviarAltas(){
-        var asunto = document.getElementById("asunto").value
-        var fecha = document.getElementById("fecha").value
-        var contenido = document.getElementById("contenido").value
-        var urgencia = document.getElementById("urgencia").value
-
-        var xhttp = new XMLHttpRequest();
-        if((asunto == "") || (fecha == "") || (contenido == "") || (urgencia == "")){
-        ons.notification.alert("Los campos no pueden ser vacios");
-        }
-        else{
-            xhttp.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
-            ons.notification.alert(this.responseText);
-                }
-            };
-            xhttp.open("GET", "https://qcinfo.000webhostapp.com/alta.php?asunto="+asunto+"&fecha="+fecha+"&contenido="+contenido+"&urgencia="+urgencia,true);
-            xhttp.send();
-            }
-        }
-    </script>
 </head>
 
-
-
 <body>
-    <<ons-splitter>
+    <!-- Splitter Section: Divides page and side-menu -->
+    <ons-splitter>
         <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
             <ons-page>
                 <ons-list>
@@ -55,108 +32,132 @@
                         Perfil
                     </ons-list-item>
                     <ons-list-item onclick="fn.load('report.html')" tappable>
-                        Anuncios
+                        Anuncio
                     </ons-list-item>
                 </ons-list>
             </ons-page>
         </ons-splitter-side>
         <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
-        </ons-splitter>
+    </ons-splitter>
 
-        <template id="home.html">           
-            <ons-page>
-                <ons-toolbar modifier="material">
-                    <div class="left">
-                        <ons-toolbar-button onclick="fn.open()">
-                            <ons-icon icon="md-menu"></ons-icon>
-                        </ons-toolbar-button>
-                    </div>
-                    <div class="center">
-                        Inicio
-                    </div>
-                </ons-toolbar>
-                <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-                    Bienvenido a QCInfo
-                </p>
-            </ons-page>
-        </template>
+    <!-- Home page -->
+    <template id="home.html">
+        <ons-page>
 
-        <template id="profile.html">
-            <ons-page>
-                <ons-toolbar modifier="material">
-                    <div class="left">
-                        <ons-toolbar-button onclick="fn.open()">
-                            <ons-icon icon="md-menu"></ons-icon>
-                        </ons-toolbar-button>
-                    </div>
-                    <div class="center">
-                        Perfil
-                    </div>
-                </ons-toolbar>
-                <ons-card modifier="material">
-                    <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
-                        style="width: 100%">
-                    <div class="title">
-                        <p id="userName">{{name}}</p>
-                    </div>
-                    <div class="content">
-                        <br><br>
-                        <ons-list>
-                            <ons-list-header>Información Personal</ons-list-header><br>
-                            <ons-list-item id="userCenter">{{center}}</ons-list-item>
-                            <ons-list-item id="userCareer">{{career}}</ons-list-item>
-                        </ons-list>
-                    </div>
+            <!-- Header section: All pages have this one -->
+            <ons-toolbar modifier="material">
+                <div class="left">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Inicio
+                </div>
+            </ons-toolbar>
+            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+                Bienvenido a QCInfo
+            </p>
+            <div id="reportData">
+
+            </div>
+        </ons-page>
+    </template>
+
+    <!-- Profile page -->
+    <template id="profile.html">
+        <ons-page>
+
+            <!-- Header section: All pages have this one -->
+            <ons-toolbar modifier="material">
+                <div class="left">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Perfil
+                </div>
+            </ons-toolbar>
+            <ons-card modifier="material">
+                <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI" style="width: 100%">
+                <div class="title">
+                    <p id="userName">{{name}}</p>
+                </div>
+                <div class="content">
                     <br><br>
-                    <ons-button>Subir foto</ons-button>
-                </ons-card>
-            </ons-page>
-        </template>
+                    <ons-list>
+                        <ons-list-header>Información Personal</ons-list-header><br>
+                        <ons-list-item id="userCenter">{{center}}</ons-list-item>
+                        <ons-list-item id="userCareer">{{career}}</ons-list-item>
+                    </ons-list>
+                </div>
+                <br><br>
+                <ons-button>Subir foto</ons-button>
+            </ons-card>
+        </ons-page>
+    </template>
 
-        <template id="report.html">
-            <ons-page>
-                <ons-toolbar modifier="material">
-                    <div class=" left">
-                        <ons-toolbar-button onclick="fn.open()">
-                            <ons-icon icon="md-menu"></ons-icon>
-                        </ons-toolbar-button>
+    <!-- Report page -->
+    <template id="report.html">
+        <ons-page>
+
+            <!-- Error Dialog Message -->
+            <ons-dialog id="report-dialog">
+                <div style="text-align: center;">
+                    <div style="text-align: center; margin-top: 30px;">
+                        <p>
+                            Datos incompletos! Por favor rellene todos los campos...
+                        </p>
+                        <p style="margin-top: 30px;">
+                            <button class="button--cta" onclick="fn.hideDialog('report-dialog')">
+                                OK
+                            </button>
+                        </p>
                     </div>
-                    <div class="center">
-                        Anuncio
-                    </div>
-                </ons-toolbar>
-                <form id="form1" name="form1" style="text-align:left;margin-top:20px; padding: 8px">
+                </div>
+            </ons-dialog>
+
+            <!-- Header section: All pages have this one -->
+            <ons-toolbar modifier="material">
+                <div class=" left">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Anuncio
+                </div>
+            </ons-toolbar>
+
+            <!-- Form section: form for sending a report -->
+            <form id="form1" name="form1" style="text-align:left;margin-top:20px; padding: 8px">
                     <p>
-                        <ons-select id="asunto" name="select1">
+                        <ons-select id="reportSubject" name="select1">
                             <option value="">- Tipo de anuncio -</option>
                             <option value="General">General</option>
                             <option value="Oferta de trabajo">Oferta de trabajo</option>
-                            <option value="Objeto perdido">Objeto perdido</option>
+                            <option value="Objeto extraviad">Objeto extraviado</option>
                             <option value="Preregistro">Preregistro</option>            
                         </ons-select>
                     </p>
-                    <p>
-                        <ons-input id="fecha">
-                            <input type="date">
-                        </ons-input>
-                    </p>
-                    <p>
-                        <textarea id="contenido" class="textarea" rows="5" placeholder="Descripción"></textarea>
-                    </p>
-                    <p>
-                        <ons-select id="urgencia" name="select1">
-                            <option value="">- Elegir urgencia del asunto -</option>
-                            <option value="low">Baja</option>
-                            <option value="normal">Moderada</option>
-                            <option value="urgent">Urgente</option>
-                        </ons-select>
-                    </p>
-                    <p>
-                        <ons-button onclick="enviarAltas()">Crear anuncio</ons-button>
-                    </p>
-                </form>
-            </ons-page>
-        </template>
+                <p>
+                    <textarea id="reportDescription" class="textarea" rows="5" placeholder="Descripción"></textarea>
+                </p>
+                <p>
+                    <ons-select id="reportType" name="select1">
+                        <option value="">- Elegir urgencia del anuncio -</option>
+                        <option value="baja">Baja</option>
+                        <option value="moderada">Moderada</option>
+                        <option value="urgente">Urgente</option>
+                    </ons-select>
+                </p>
+                <p>
+                    <input onclick="sendAnuncio()" class="login-button button--large button" value="Enviar">
+                </p>
+            </form>
+        </ons-page>
+    </template>
 </body>
 
 </html>

@@ -58,6 +58,7 @@ loadNewsFeed = function () {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var reportArray = JSON.parse(this.responseText);
+            var amountNotifications = 0;
             for (let i = 0; i < reportArray.length; i++) {
                 var subject = document.createTextNode(reportArray[i].tema);
                 var about = document.createTextNode(reportArray[i].descripcion);
@@ -77,7 +78,12 @@ loadNewsFeed = function () {
 
                 var element = document.getElementById("reportData");
                 element.appendChild(card);
+                amountNotifications++;
             }
+            document.getElementById("notifications").innerHTML = amountNotifications;
+            document.getElementById("welcome").innerHTML = "Bienvenido " + userData.name + " a QCInfo, tiene " + amountNotifications +
+                " nuevos reportes";
+            console.log(document.getElementById("notifications"));
         }
     };
     xhttp.open("GET", "https://qcinfo.000webhostapp.com/retrieveReports.php", true);

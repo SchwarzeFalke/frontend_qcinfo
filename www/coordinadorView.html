@@ -22,16 +22,20 @@
 <body>
     <!-- Splitter Section: Divides page and side-menu -->
     <ons-splitter>
-        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+        <ons-splitter-side id="menu" side="left" width="200px" collapse swipeable>
             <ons-page>
+                <img src="img/side.png" alt="QCInfo" style="width: 80%; margin: 15px;" />
                 <ons-list>
-                    <ons-list-item onclick="fn.load('home.html')" tappable>
+                    <ons-list-item onclick="fn.load('home.html')" tappable
+                        style="font-weight: bold; font-size: 18px; color: rgba(52, 176, 248, 0.849)">
                         NewsFeed
                     </ons-list-item>
-                    <ons-list-item onclick="fn.load('profile.html')" tappable>
+                    <ons-list-item onclick="fn.load('profile.html')" tappable
+                        style="font-weight: bold; font-size: 18px; color: rgba(52, 176, 248, 0.849)">
                         Perfil
                     </ons-list-item>
-                    <ons-list-item onclick="fn.load('report.html')" tappable>
+                    <ons-list-item onclick="fn.load('report.html')" tappable
+                        style="font-weight: bold; font-size: 18px; color: rgba(52, 176, 248, 0.849)">
                         Anuncio
                     </ons-list-item>
                 </ons-list>
@@ -39,7 +43,7 @@
         </ons-splitter-side>
         <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
     </ons-splitter>
-
+    
     <!-- Home page -->
     <template id="home.html">
         <ons-page>
@@ -48,22 +52,31 @@
             <ons-toolbar modifier="material">
                 <div class="left">
                     <ons-toolbar-button onclick="fn.open()">
-                        <ons-icon icon="md-menu"></ons-icon>
+                        <ons-icon icon="md-menu" style="color: rgba(52, 176, 248, 0.849)"></ons-icon><span
+                            id="notifications" class="notification notification--material"></span>
                     </ons-toolbar-button>
                 </div>
-                <div class="center">
+                <div class=" center" style="font-weight: bold; font-size: 28px; color: rgba(52, 176, 248, 0.849)">
                     Inicio
                 </div>
             </ons-toolbar>
-            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-                Bienvenido a QCInfo
-            </p>
+            <ons-card>
+                <div class="title"><img src="img/welcome.png" alt="QCInfo"
+                        style="width: 40%; margin: 15px; margin-left: 25%;" /></div>
+                <p id="welcome"
+                    style="text-align: center; opacity: 0.6; padding-top: 5px; font-size: 15px; color: rgba(248, 52, 160, 0.849)">
+                    {{welcome}}
+                </p>
+            </ons-card>
             <div id="reportData">
 
             </div>
+            <ons-bottom-toolbar>
+                <div style="text-align: center; line-height: 44px"></div>
+            </ons-bottom-toolbar>
         </ons-page>
     </template>
-
+    
     <!-- Profile page -->
     <template id="profile.html">
         <ons-page>
@@ -72,28 +85,34 @@
             <ons-toolbar modifier="material">
                 <div class="left">
                     <ons-toolbar-button onclick="fn.open()">
-                        <ons-icon icon="md-menu"></ons-icon>
+                        <ons-icon icon="md-menu"></ons-icon><span id="notifications"
+                            class="notification notification--material"></span>
                     </ons-toolbar-button>
                 </div>
-                <div class="center">
+                <div class="center" style="font-weight: bold; font-size: 28px; color: rgba(52, 176, 248, 0.849)">
                     Perfil
                 </div>
             </ons-toolbar>
             <ons-card modifier="material">
-                <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI" style="width: 100%">
-                <div class="title">
+                <center>
+                    <img id="avatar" alt="Profile Picture" height="240" width="240">
+                </center>
+                <div class="title" style="font-weight: bold; font-size: 20px; color: rgba(52, 176, 248, 0.849)">
                     <p id="userName">{{name}}</p>
                 </div>
                 <div class="content">
-                    <br><br>
+                    <br>
                     <ons-list>
                         <ons-list-header>Información Personal</ons-list-header><br>
-                        <ons-list-item id="userCenter">{{center}}</ons-list-item>
-                        <ons-list-item id="userCareer">{{career}}</ons-list-item>
+                        <ons-list-item id="userCenter" style="font-size: 20px; color: rgba(52, 176, 248, 0.849)">
+                            {{center}}</ons-list-item><br>
+                        <ons-list-item id="userCareer" style="font-size: 20px; color: rgba(52, 176, 248, 0.849)">
+                            {{career}}</ons-list-item><br>
                     </ons-list>
                 </div>
-                <br><br>
-                <ons-button>Subir foto</ons-button>
+                <br>
+                <input id="imageHolder" type="file" name="profilePicture">
+                <ons-button onclick="uploadPicture()">Subir foto</ons-button>
             </ons-card>
         </ons-page>
     </template>
@@ -122,40 +141,49 @@
             <ons-toolbar modifier="material">
                 <div class=" left">
                     <ons-toolbar-button onclick="fn.open()">
-                        <ons-icon icon="md-menu"></ons-icon>
+                        <ons-icon icon="md-menu"></ons-icon><span id="notifications"
+                            class="notification notification--material"></span>
                     </ons-toolbar-button>
                 </div>
-                <div class="center">
-                    Anuncio
+                <div class=" center" style="font-weight: bold; font-size: 28px; color: rgba(52, 176, 248, 0.849)">
+                    Emitir anuncio
                 </div>
             </ons-toolbar>
 
             <!-- Form section: form for sending a report -->
-            <form id="form1" name="form1" style="text-align:left;margin-top:20px; padding: 8px">
+            <ons-card modifier="material">
+                <div class="center" style="font-weight: bold; font-size: 28px; color: rgba(52, 176, 248, 0.849)">
+                    Anuncio
+                </div>
+                <form id="form1" name="form1" style="text-align:left;margin-top:20px; padding: 8px">
                     <p>
                         <ons-select id="reportSubject" name="select1">
                             <option value="">- Tipo de anuncio -</option>
                             <option value="General">General</option>
                             <option value="Oferta de trabajo">Oferta de trabajo</option>
-                            <option value="Objeto extraviad">Objeto extraviado</option>
+                            <option value="Objeto perdido">Objeto perdido</option>
                             <option value="Preregistro">Preregistro</option>            
                         </ons-select>
                     </p>
-                <p>
-                    <textarea id="reportDescription" class="textarea" rows="5" placeholder="Descripción"></textarea>
-                </p>
-                <p>
-                    <ons-select id="reportType" name="select1">
-                        <option value="">- Elegir urgencia del anuncio -</option>
-                        <option value="baja">Baja</option>
-                        <option value="moderada">Moderada</option>
-                        <option value="urgente">Urgente</option>
-                    </ons-select>
-                </p>
-                <p>
+                    <p>
+                        <textarea id="reportDescription" class="textarea" rows="5" placeholder="Descripción"></textarea>
+                    </p>
+                    <p>
+                        <ons-select id="reportType" name="select1">
+                            <option value="">- Elegir urgencia del asunto -</option>
+                            <option value="baja">Baja</option>
+                            <option value="moderada">Moderada</option>
+                            <option value="urgente">Urgente</option>
+                        </ons-select>
+                    </p>
+                    <p>
                     <input onclick="sendAnuncio()" class="login-button button--large button" value="Enviar">
-                </p>
-            </form>
+                    </p>
+                </form>
+            </ons-card>
+            <ons-bottom-toolbar>
+                <div style="text-align: center; line-height: 44px"></div>
+            </ons-bottom-toolbar>
         </ons-page>
     </template>
 </body>

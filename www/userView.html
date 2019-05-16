@@ -22,8 +22,9 @@
 <body>
     <!-- Splitter Section: Divides page and side-menu -->
     <ons-splitter>
-        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+        <ons-splitter-side id="menu" side="left" width="200px" collapse swipeable>
             <ons-page>
+                <img src="img/side.png" alt="QCInfo" style="width: 80%; margin: 15px;" />
                 <ons-list>
                     <ons-list-item onclick="fn.load('home.html')" tappable>
                         NewsFeed
@@ -80,12 +81,14 @@
                 </div>
             </ons-toolbar>
             <ons-card modifier="material">
-                <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI" style="width: 100%">
+                <center>
+                    <img id="avatar" alt="Profile Picture" height="240" width="240">
+                </center>
                 <div class="title">
                     <p id="userName">{{name}}</p>
                 </div>
                 <div class="content">
-                    <br><br>
+                    <br>
                     <ons-list>
                         <ons-list-header>Información Personal</ons-list-header><br>
                         <ons-list-item id="userCenter">{{center}}</ons-list-item>
@@ -93,7 +96,8 @@
                     </ons-list>
                 </div>
                 <br><br>
-                <ons-button>Subir foto</ons-button>
+                <input id="imageHolder" type="file" name="profilePicture">
+                <ons-button onclick="uploadPicture()">Subir foto</ons-button>
             </ons-card>
         </ons-page>
     </template>

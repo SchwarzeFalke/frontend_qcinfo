@@ -59,38 +59,34 @@ loadNewsFeed = function () {
         if (this.readyState == 4 && this.status == 200) {
             var reportArray = JSON.parse(this.responseText);
             var amountNotifications = 0;
-            var date = reportArray[0].Fecha;
             for (let i = 0; i < reportArray.length; i++) {
-                var subject = document.createTextNode(reportArray[i].tema);
-                var about = document.createTextNode(reportArray[i].descripcion);
-                var type = document.createTextNode("Prioridad:" + reportArray[i].Tipo);
+                var subject = document.createTextNode(reportArray[i].asunto);
+                var about = document.createTextNode(reportArray[i].contenido);
+                var type = reportArray[i].urgencia;
+                var date = reportArray[i].fecha;
 
                 var card = document.createElement("ons-card");
 
                 var cardTitle = document.createElement("h2");
                 cardTitle.appendChild(subject);
 
-                var cardType = document.createElement("h3");
-                cardType.appendChild(type);
-
                 var cardContent = document.createElement("p");
                 cardContent.appendChild(about);
 
                 card.appendChild(cardTitle);
-                card.appendChild(cardType);
                 card.appendChild(cardContent);
 
                 var element = document.getElementById("reportData");
                 element.appendChild(card);
                 amountNotifications++;
             }
-            document.getElementById("date").innerHTML = "Reportes del: " + date;
             document.getElementById("notifications").innerHTML = amountNotifications;
             document.getElementById("welcome").innerHTML = "Bienvenido " + userData.name + " a QCInfo, tiene " + amountNotifications +
-                " nuevos reportes";
+                " nuevos avisos";
+            console.log(document.getElementById("notifications"));
         }
     };
-    xhttp.open("GET", "https://qcinfo.000webhostapp.com/retrieveReports.php", true);
+    xhttp.open("GET", "https://qcinfo.000webhostapp.com/retrieveAvisos.php", true);
     xhttp.send();
 };
 
